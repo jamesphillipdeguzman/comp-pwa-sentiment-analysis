@@ -3,6 +3,14 @@ from transformers import pipeline
 from collections import Counter
 from datetime import datetime
 import re
+from dotenv import load_dotenv
+import os
+
+# Load variables from .env
+load_dotenv()
+
+# Now HF_TOKEN is available as an environment variable
+hf_token = os.getenv("HF_TOKEN")
 
 # --------------------------
 # LOAD AI MODEL (once)
@@ -11,7 +19,8 @@ print("Loading AI model... (first time may take a while)")
 sentiment_model = pipeline(
     "sentiment-analysis",
     model="cardiffnlp/twitter-roberta-base-sentiment",
-    device=0  # Use GPU if available; remove if CPU only
+    device=0,              # GPU if available
+    use_auth_token=hf_token
 )
 
 LABEL_MAP = {

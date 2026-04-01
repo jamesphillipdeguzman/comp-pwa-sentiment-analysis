@@ -191,7 +191,7 @@ def main(batch_size=5000):
     agg_df["export_timestamp"] = current_time
     top10_issues["export_timestamp"] = current_time
 
-    with pd.ExcelWriter("ai_output_aggregated.xlsx") as writer:
+    with pd.ExcelWriter("companion-pwa-sentiment-analysis.xlsx") as writer:
         agg_df.to_excel(writer, sheet_name="All_Issues", index=False)
         top10_issues.to_excel(writer, sheet_name="Top_10_Issues", index=False)
     print("✅ Done! Output saved with 2 sheets: 'All_Issues' and 'Top_10_Issues'.")

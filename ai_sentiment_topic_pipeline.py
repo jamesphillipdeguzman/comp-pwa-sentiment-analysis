@@ -1,6 +1,7 @@
 import pandas as pd
 from transformers import pipeline
 from collections import Counter
+from datetime import datetime
 import re
 
 # --------------------------
@@ -168,13 +169,22 @@ def main(batch_size=5000):
     # --------------------------
     top10_issues = agg_df.sort_values("student_count", ascending=False).head(10)
 
+
+    # Add export timestamp
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    agg_df["export_timestamp"] = current_time
+    top10_issues["export_timestamp"] = current_time
+
     # --------------------------
     # SAVE OUTPUT
     # --------------------------
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    agg_df["export_timestamp"] = current_time
+    top10_issues["export_timestamp"] = current_time
+
     with pd.ExcelWriter("ai_output_aggregated.xlsx") as writer:
         agg_df.to_excel(writer, sheet_name="All_Issues", index=False)
         top10_issues.to_excel(writer, sheet_name="Top_10_Issues", index=False)
-
     print("✅ Done! Output saved with 2 sheets: 'All_Issues' and 'Top_10_Issues'.")
 
 
